@@ -40,8 +40,11 @@ def get_person_by_id(twitter_handler, twitter_id):
     return Person(p)
 
 
-def get_multiple_people(twitter_handler, twitter_ids):
-    user_list = twitter_handler.users.lookup(user_id=twitter_ids)
+def get_multiple_people(twitter_handler, twitter_ids=None, twitter_handles=None):
+    if twitter_ids:
+        user_list = twitter_handler.users.lookup(user_id=",".join(twitter_ids))
+    elif twitter_handles:
+        user_list = twitter_handler.users.lookup(screen_name=",".join(twitter_handles))
     return [Person(u) for u in user_list]
 
 
